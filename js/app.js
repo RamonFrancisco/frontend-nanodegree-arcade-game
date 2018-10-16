@@ -59,12 +59,6 @@ class Player extends Coordinates {
         this.x = 202;
     }
 
-    nextLevel() {
-        if( player.y <= 0) {
-            console.log('level');
-        }
-    }
-
     isLive(){
         if( checkCollisions() ) {
             this.live--;
@@ -81,11 +75,11 @@ class Player extends Coordinates {
 
     update() {
         if( this.y <= -11 ) {
-            setTimeout(() => this.y = 400, 1000 )
+            setTimeout(() => this.y = 400, 1 );
+            nextLevel();
         }
         this.isLive();
         this.isDead();
-        this.nextLevel()
     }
 
     render() {
@@ -112,6 +106,12 @@ class Player extends Coordinates {
                 (this.y >= 400 ) ? this.y = 400 : this.y += eixoY;
                 break;
         }
+    }
+}
+
+function nextLevel() {
+    if( player.y <= 0) {
+        allEnemies.push(new Enemy);
     }
 }
 
