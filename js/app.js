@@ -17,7 +17,7 @@ class Enemy extends Coordinates {
         // ajudante que é fornecido para carregar imagens
         // com facilidade.
         this.sprite = 'images/enemy-bug.png';
-        this.speed = Math.random() * 400; 
+        this.speed = Math.random() * 400;
         this.positions = [68, 151, 234];
         this.y = this.positions[Math.floor(Math.random() * this.positions.length)];
     }
@@ -32,7 +32,7 @@ class Enemy extends Coordinates {
             this.x = -101;
             this.y = this.positions[Math.floor(Math.random() * this.positions.length)];
         }
-        this.x = this.x + this.speed * dt;
+        this.x += this.speed * dt;
         
     }
 
@@ -70,12 +70,11 @@ class Player extends Coordinates {
             this.alive = false;
         }
     }
-
     
 
     update() {
         if( this.y <= -11 ) {
-            setTimeout(() => this.y = 400, 1 );
+            setTimeout(() => this.resetPosition(), 1 );
             nextLevel();
         }
         this.isLive();
@@ -111,8 +110,12 @@ class Player extends Coordinates {
 
 function nextLevel() {
     if( player.y <= 0) {
+        alert('Nice')
         allEnemies.push(new Enemy);
     }
+    allEnemies.forEach(enemy => {
+        enemy.speed = Math.random() * 400;
+    });
 }
 
 const allEnemies = [
