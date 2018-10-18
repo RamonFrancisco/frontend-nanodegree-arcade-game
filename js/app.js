@@ -51,7 +51,7 @@ class Player extends Coordinates {
         this.player = 'images/char-boy.png';
         this.alive = true;
         this.live = 3;
-        this.level = 0;
+        this.level = 1;
     }
 
     resetPosition() {
@@ -59,9 +59,16 @@ class Player extends Coordinates {
         this.x = 202;
     }
 
-    isLive(){
+    lose(){
         if( checkCollisions() ) {
             this.live--;
+            if ( this.live === 0 ) {
+                alert('Acabou suas tentativas');
+                this.isDead();
+                alert('Atualize a página para voltar a jogar');
+            } else {
+                alert(`Você perdeu! Agora restam apenas ${this.live} vidas`);
+            }
         }
     }
 
@@ -75,10 +82,10 @@ class Player extends Coordinates {
     update() {
         if( this.y <= -11 ) {
             setTimeout(() => this.resetPosition(), 1 );
+            this.level++;
             nextLevel();
         }
-        this.isLive();
-        this.isDead();
+        this.lose();
     }
 
     render() {
@@ -109,10 +116,10 @@ class Player extends Coordinates {
 }
 
 function nextLevel() {
-    if( player.y <= 0) {
-        alert('Nice')
+    if( player.y <= 0 && player.level % 2 === 0) {
         allEnemies.push(new Enemy);
     }
+    alert(`Muito bem! Você está no level ${player.level} `)
     allEnemies.forEach(enemy => {
         enemy.speed = Math.random() * 400;
     });
